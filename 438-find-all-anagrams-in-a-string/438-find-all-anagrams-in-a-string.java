@@ -1,7 +1,7 @@
 class Solution {
     public List<Integer> findAnagrams(String s, String p) {
         List<Integer> result = new LinkedList<>();
-        if(p.length() > s.length()) return result;
+        if(p.isEmpty() || s.isEmpty() || p.length() > s.length()) return result;
 
         HashMap<Character,Integer> hashMap = new HashMap<>();
         for(char ch : p.toCharArray()){
