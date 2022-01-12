@@ -16,15 +16,25 @@
 class Solution {
     public boolean isSymmetric(TreeNode root) {
         if(root == null) return true;
-        if(root.left == null && root.right == null) return true;
         
-        return isSymmetricUtil(root.left,root.right);
-    }
-    public boolean isSymmetricUtil(TreeNode left,TreeNode right){
-        if(left == null && right == null) return true;
-        if(left == null) return false;
-        if(right == null) return false;
+        if(root.left == null && root.right == null)  return true;
         
-        return left.val == right.val && isSymmetricUtil(left.left,right.right) && isSymmetricUtil(left.right,right.left);
+        Stack<TreeNode> st = new Stack<>();
+        st.push(root.left);
+        st.push(root.right);
+        
+        while(!st.isEmpty()){
+            TreeNode first = st.pop();
+            TreeNode second = st.pop();
+            if(first == null && second == null) continue;
+            if(first == null || second == null) return false;
+            if(first.val != second.val) return false;
+            
+            st.push(first.left);
+            st.push(second.right);
+            st.push(first.right);
+            st.push(second.left);
+        }
+        return true;
     }
 }
