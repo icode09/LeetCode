@@ -10,22 +10,21 @@
  */
 class Solution {
 public:
-    vector<int> nextLargerNodes(ListNode* h) {
-        if(!h) return {};
+    vector<int> nextLargerNodes(ListNode* head) {
+        if(!head) return {};
         
-        if(!h->next) return {0};
+        if(!head->next) return {0};
         
-        
-        vector<int> res, stack;
-    for (auto p = h; p != nullptr; p = p->next) res.push_back(p->val);
-    for (int i = res.size() - 1; i >= 0; --i) {
-    auto val = res[i];
-    while (!stack.empty() && stack.back() <= res[i]) stack.pop_back();
-    res[i] = stack.empty() ? 0 : stack.back();
-    stack.push_back(val);
-  }
-  return res;
+        vector<int> result;
+	stack<pair<int,int> > st;
+	for (int i = 0; head; head = head->next) {
+		while (st.size() && head->val > st.top().first) {
+			result[st.top().second] = head->val;
+			st.pop();
+		}
+		st.push({head->val, i++});
+		result.push_back(0);
+	}
+	return result;
     }
-    
-    
 };
