@@ -12,13 +12,36 @@
 class Solution {
 public:
     TreeNode* trimBST(TreeNode* root, int low, int high) {
-        if(!root) return NULL;
+        if(!root) return nullptr;
         
-        if(root->val < low) return trimBST(root->right,low,high);
-        if(root->val > high) return trimBST(root->left,low,high);
+        while(root && (root->val < low || root->val > high)){
+            if(root->val < low)
+                root = root->right;
+            else if(root->val > high)
+                root = root->left;
+        }
         
-        root->left = trimBST(root->left,low,high);
-        root->right = trimBST(root->right,low,high);
+        // Now we have reached at valid root position
+        
+        TreeNode* curr = root;
+        
+        // remove leftSubtree invalid nodes
+        while(curr){
+            while(curr->left && curr->left->val < low)
+                curr->left = curr->left->right;
+            
+            curr = curr->left;
+        }
+        
+        curr = root;
+        
+        // remove right Subtree invalid nodes
+        while(curr){
+            while(curr->right && curr->right->val > high)
+                curr->right = curr->right->left;
+            
+            curr = curr->right;
+        }
         
         return root;
     }
