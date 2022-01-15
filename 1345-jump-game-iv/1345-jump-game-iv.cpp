@@ -23,10 +23,12 @@ public:
                 
                 if(curr_index == n - 1) return steps;
                 
-                vector<int>& neigh = mapka[arr[curr_index]];
+                vector<int> neigh = mapka[arr[curr_index]];
                 
-                neigh.push_back(curr_index - 1);
-                neigh.push_back(curr_index + 1);
+                if(find(neigh.begin(),neigh.end(),curr_index - 1) == neigh.end() && curr_index - 1 >= 0) 
+                    neigh.push_back(curr_index - 1);
+                if(find(neigh.begin(),neigh.end(),curr_index + 1) == neigh.end()) 
+                    neigh.push_back(curr_index + 1);
                 
                 for(auto j : neigh){
                     if(j >= 0 && j < n && !visited[j]){
@@ -35,10 +37,9 @@ public:
                     }
                 }
                 
-                neigh.clear();
+                mapka.erase(arr[curr_index]);
             }
-            
-            steps++;
+           steps++; 
         }
         
         return -1;
