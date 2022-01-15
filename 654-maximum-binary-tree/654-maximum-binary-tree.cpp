@@ -11,6 +11,7 @@
  */
 class Solution {
 public:
+    unordered_map<int,TreeNode*> mapka;
     int findMaxIndex(vector<int>& nums,int start,int end){
         
         int index = start;
@@ -28,6 +29,9 @@ public:
         if(start > end ) return NULL;
         
         int index = findMaxIndex(nums,start,end);
+        
+        if(mapka.find(nums[index]) != mapka.end()) return mapka[nums[index]];
+        
         TreeNode* root =  new TreeNode(nums[index]);
         
         root->left = maximumTree(nums,start,index - 1);
@@ -41,6 +45,7 @@ public:
         if(n == 0) return NULL;
         if(n == 1) return new TreeNode(nums[0]);
         
+        mapka.clear();
         
         return maximumTree(nums,0,n-1);
     }
