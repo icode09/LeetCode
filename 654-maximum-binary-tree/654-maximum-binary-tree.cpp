@@ -28,11 +28,13 @@ public:
     TreeNode* maximumTree(vector<int>& nums,int start,int end){
         if(start > end ) return NULL;
         
-        int index = findMaxIndex(nums,start,end);
+        int index = findMaxIndex(nums,start,end); // O(n) operation
         
         if(mapka.find(nums[index]) != mapka.end()) return mapka[nums[index]];
         
         TreeNode* root =  new TreeNode(nums[index]);
+        mapka[nums[index]] = root;
+        
         
         root->left = maximumTree(nums,start,index - 1);
         root->right = maximumTree(nums,index + 1,end);
