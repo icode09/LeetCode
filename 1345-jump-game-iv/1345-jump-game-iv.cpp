@@ -5,10 +5,11 @@ public:
         
         if(n == 1) return 0;
         
-        unordered_map<int,vector<int>> mapka;
+        unordered_map<int,unordered_set<int>> mapka;
         for(int i = 0;i<n;i++){
-            mapka[arr[i]].push_back(i);
+            mapka[arr[i]].insert(i);
         }
+        
         queue<int> q;
         q.push(0);
         vector<bool> visited(n,false);
@@ -23,12 +24,10 @@ public:
                 
                 if(curr_index == n - 1) return steps;
                 
-                vector<int> neigh = mapka[arr[curr_index]];
+                unordered_set<int> neigh = mapka[arr[curr_index]];
+                neigh.insert(curr_index + 1);
+                neigh.insert(curr_index - 1);
                 
-                if(find(neigh.begin(),neigh.end(),curr_index - 1) == neigh.end() && curr_index - 1 >= 0) 
-                    neigh.push_back(curr_index - 1);
-                if(find(neigh.begin(),neigh.end(),curr_index + 1) == neigh.end()) 
-                    neigh.push_back(curr_index + 1);
                 
                 for(auto j : neigh){
                     if(j >= 0 && j < n && !visited[j]){
