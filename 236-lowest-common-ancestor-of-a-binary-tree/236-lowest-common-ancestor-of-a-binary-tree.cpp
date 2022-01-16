@@ -12,11 +12,37 @@ public:
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
         if(!root || root == p || root == q) return root;
         
-        TreeNode* left = lowestCommonAncestor(root->left,p,q);
-        TreeNode* right = lowestCommonAncestor(root->right,p,q);
+        unordered_map<TreeNode* , TreeNode*> parent;
+        stack<TreeNode*> st;
+        st.push(root);
+        parent.insert({root,nullptr});
         
-        if(left && right) return root;
-        else if(left) return left;
-        else return right;
+        // Assumption is that the Tree contains both nodes p and q
+        while(parent.find(p) == parent.end() || parent.find(q) == parent.end()){
+            TreeNode* curr = st.top();
+            st.pop();
+            
+            if(curr->left){
+                parent[curr->left] = curr;
+                st.push(curr->left);
+            }
+            
+            if(curr->right){
+                parent[curr->right]  = curr;
+                st.push(curr->right);
+            }
+        }
+        
+        // From p we try to move up, and store the path in set
+        unordered_set<TreeNode*> res;
+        while(p){
+            res.insert(p);
+            p = parent[p];
+        }
+        
+        while(res.find(q) == res.end())
+            q = parent[q];
+        
+        return q;
     }
 };
