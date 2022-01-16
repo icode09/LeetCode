@@ -1,27 +1,22 @@
 class Solution {
 public:
-    static bool mySort(const pair<char,int>& p1,const pair<char,int>& p2){
-        return p1.second > p2.second;
-    }
     string frequencySort(string s) {
-        int n = s.length();
-        unordered_map<char,int> mapka;
-        for(int i = 0;i<n;i++){
-            mapka[s[i]]++;
+       unordered_map<char, int> freqOfChar;
+        for(char c : s) {
+            freqOfChar[c] ++;
         }
         
-        string res = "";
-        vector<pair<char,int>> vp;
-        for(auto it: mapka)
-            vp.push_back({it.first,it.second});
-        
-        
-        sort(begin(vp),end(vp),mySort);
-        
-        for(auto p : vp){
-            res += string(p.second,p.first);
+        map<int, string> dupStr;
+        for(auto v : freqOfChar) {
+            char c = v.first;
+            int n = v.second;
+            dupStr[n] += string(n, c);
         }
         
+        string res;
+        for(auto rit = dupStr.rbegin(); rit != dupStr.rend(); ++rit) {
+            res += rit->second;
+        }
         return res;
     }
 };
