@@ -19,8 +19,8 @@ public:
 	        if(arr[mid] > x) high = mid - 1;
 	        else if(arr[mid] < x) low = mid + 1;
 	        else{
-	            while(mid != 0 && arr[mid] == arr[mid-1]) mid--;
-	            return mid;
+	            if(mid == 0 || arr[mid] != arr[mid-1]) return mid;
+	            else high = mid - 1;
 	        }
 	    }
 	    return -1;
@@ -32,8 +32,8 @@ public:
 	        if(arr[mid] > x) high = mid - 1;
 	        else if(arr[mid] < x) low = mid + 1;
 	        else{
-	            while(mid != n-1 && arr[mid] == arr[mid + 1]) mid++;
-	            return mid;
+	            if(mid == n-1 || arr[mid] != arr[mid + 1]) return mid;
+	            else low = mid + 1;
 	        }
 	    }
 	    return -1;
