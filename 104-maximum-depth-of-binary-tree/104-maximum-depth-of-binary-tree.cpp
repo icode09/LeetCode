@@ -11,23 +11,26 @@
  */
 class Solution {
 public:
-    int maxLevel;
-    void dfs(TreeNode* root,int currLevel){
-        if(!root) return ;
-        
-        if(maxLevel < currLevel){
-            maxLevel = currLevel;
-        }
-        
-        dfs(root->left,currLevel+1);
-        dfs(root->right,currLevel + 1);
-    }
     int maxDepth(TreeNode* root) {
         if(!root) return 0;
         
-        maxLevel = 1;
-        int currLevel = 1;
-        dfs(root,currLevel);
+        stack<pair<TreeNode*,int>> st;
+        st.push({root,1});
+        
+        int maxLevel = 1;
+        
+        while(!st.empty()){
+            TreeNode* top = st.top().first;
+            int level = st.top().second;
+            st.pop();
+            
+            if(maxLevel < level){
+                maxLevel = level;
+            }
+            
+            if(top->right) st.push({top->right , level + 1});
+            if(top->left) st.push({top->left , level + 1});
+        }
         
         return maxLevel;
     }
