@@ -11,21 +11,28 @@
  */
 class Solution {
 public:
-    bool dfs(TreeNode* root, int targetSum,int sum){
-        if(!root) return false;
-        
-        sum += root->val;
-        
-        if(!root->left && !root->right){
-            if(sum == targetSum)
-                return true;
-        }
-        
-        return dfs(root->left,targetSum,sum) || dfs(root->right,targetSum,sum);
-    }
     bool hasPathSum(TreeNode* root, int targetSum) {
         if(!root) return false;
-        int sum = 0;
-        return dfs(root,targetSum,sum);
+        
+        stack<pair<TreeNode*,int>> st;
+        st.push({root,root->val});
+        
+        
+        while(!st.empty()){
+            TreeNode* top = st.top().first;
+            int currSum = st.top().second;
+            st.pop();
+            
+            
+            if(!top->left && !top->right){
+                if(currSum == targetSum)
+                    return true;
+            }
+            
+            if(top->right) st.push({top->right , currSum + top->right->val});
+            if(top->left) st.push({top->left , currSum + top->left->val});
+        }
+        
+        return false;
     }
 };
