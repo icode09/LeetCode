@@ -11,22 +11,24 @@
  */
 class Solution {
 public:
-    TreeNode* convert(TreeNode* root,int& sum){
-        if(!root) return root;
-        
-        convert(root->right,sum);
-        
-        sum += root->val;
-        
-        root->val = sum;
-        
-        convert(root->left,sum);
-        
-        return root;
-    }
     TreeNode* convertBST(TreeNode* root) {
-        if(!root) return 0;
-        int ans = 0;
-       return convert(root,ans);
+        if(!root) return NULL;
+        
+        stack<TreeNode*> st;
+        int sum = 0;
+        TreeNode* curr = root;
+        while(!st.empty() || curr){
+            while(curr){
+                st.push(curr);
+                curr = curr->right;
+            }
+            curr = st.top();
+            st.pop();
+            sum += curr->val;
+            curr->val = sum;
+            
+            curr = curr->left;
+        }
+        return root;
     }
 };
