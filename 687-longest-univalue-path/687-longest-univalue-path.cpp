@@ -11,22 +11,25 @@
  */
 class Solution {
 public:
-    int ans;
-    int dfs(TreeNode* node){
-        int l = node->left ? dfs(node->left) : 0;
-        int r = node->right ? dfs(node->right) : 0;
+    int dfs(TreeNode* root,int& ans){
+        if(!root) return 0;
         
-        int resl = node->left && node->left->val == node->val ? l + 1 : 0;
-        int resr = node->right && node->right->val == node->val ? r + 1 : 0;
+        int left = dfs(root->left,ans);
+        int right = dfs(root->right,ans);
         
-        ans = max(ans, resl + resr);
-        return max(resl, resr);
+        int resL = (root->left && root->left->val == root->val) ? left + 1 : 0;
+        int resR = (root->right && root->right->val == root->val) ? right + 1 : 0;
+        
+        ans = max(ans , resL + resR);
+        
+        return max(resL, resR);
     }
     int longestUnivaluePath(TreeNode* root) {
         if(!root) return 0;
-        ans = 0;
         
-        dfs(root);
+        int ans = 0;
+        
+        dfs(root,ans);
         
         return ans;
     }
