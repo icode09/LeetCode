@@ -28,15 +28,10 @@ public:
         }else{
             // 3 Conditions => 1. No child, 2. Single child, 3. both childs
             if(!root->left && !root->right) return NULL;
-            else if(!root->left){
-                TreeNode* nextNode = root->right;
-                delete root;
-                return nextNode;
-            }else if(!root->right){
-                TreeNode* nextNode = root->left;
-                delete root;
-                return nextNode;
-            }else{
+            else if(!root->left || !root->right){
+                return (root->left) ? root->left : root->right;
+            }
+            else{
                 TreeNode* nextNode = findInorderSucc(root,key);
                 root->val = nextNode->val;
                 root->right = deleteNode(root->right,nextNode->val);
