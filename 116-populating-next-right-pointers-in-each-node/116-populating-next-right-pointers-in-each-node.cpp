@@ -18,38 +18,26 @@ public:
 
 class Solution {
 public:
-    Node* nextRight(Node* root){
-        Node* curr = root->next;
-        while(curr){
-            if(curr->left) return curr->left;
-            else if(curr->right) return curr->right;
-            
-            curr = curr->next;
-        }
-        
-        return NULL;
-    }
+
     Node* connect(Node* root) {
         if(!root) return NULL;
         
-        Node* curr = root;
-        curr->next = NULL;
+        queue<Node*> q;
+        q.push(root);
         
-        while(curr){
-            Node* levelNode = curr;
-            while(levelNode){
-                if(levelNode->left){
-                    if(levelNode->right) levelNode->left->next = levelNode->right;
-                    else levelNode->next = nextRight(levelNode);
-                }
-                if(levelNode->right)
-                    levelNode->right->next = nextRight(levelNode);
+        while(!q.empty()){
+            Node* rightNode = NULL;
+            int size = q.size();
+            while(size--){
+                Node* curr = q.front();
+                q.pop();
                 
-                levelNode = levelNode->next;
+                curr->next = rightNode;
+                rightNode = curr;
+                
+                if(curr->right) q.push(curr->right);
+                if(curr->left) q.push(curr->left);
             }
-            if(curr->left) curr = curr->left;
-            else if(curr->right) curr = curr->right;
-            else curr = nextRight(curr);
         }
         
         return root;
