@@ -18,26 +18,21 @@ public:
 
 class Solution {
 public:
-
     Node* connect(Node* root) {
         if(!root) return NULL;
         
-        queue<Node*> q;
-        q.push(root);
-        
-        while(!q.empty()){
-            Node* rightNode = NULL;
-            int size = q.size();
-            while(size--){
-                Node* curr = q.front();
-                q.pop();
-                
-                curr->next = rightNode;
-                rightNode = curr;
-                
-                if(curr->right) q.push(curr->right);
-                if(curr->left) q.push(curr->left);
+        Node* curr = root;
+        while(curr){
+            Node* levelNode = curr;
+            while(levelNode){
+                if(levelNode->left){
+                    levelNode->left->next = levelNode->right;
+                    if(levelNode->next)
+                        levelNode->right->next = levelNode->next->left;
+                }
+                levelNode = levelNode->next;
             }
+            curr = curr->left;
         }
         
         return root;
