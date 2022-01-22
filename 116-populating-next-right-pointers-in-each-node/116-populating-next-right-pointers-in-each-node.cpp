@@ -19,20 +19,34 @@ public:
 class Solution {
 public:
     Node* connect(Node* root) {
-        if(!root) return NULL;
-        
         Node* curr = root;
+        Node* prev = NULL , *head = NULL;
+        
         while(curr){
-            Node* levelNode = curr;
-            while(levelNode){
-                if(levelNode->left){
-                    levelNode->left->next = levelNode->right;
-                    if(levelNode->next)
-                        levelNode->right->next = levelNode->next->left;
+            while(curr){
+                if(curr->left){
+                    if(prev){
+                        prev->next = curr->left;
+                    }
+                    else{
+                        head = curr->left;
+                    }
+                    prev = curr->left;
                 }
-                levelNode = levelNode->next;
+                if(curr->right){
+                    if(prev){
+                        prev->next = curr->right;
+                    }
+                    else{
+                        head = curr->right;
+                    }
+                    prev = curr->right;
+                }
+                curr = curr->next;
             }
-            curr = curr->left;
+            curr = head;
+            head = NULL;
+            prev = NULL;
         }
         
         return root;
