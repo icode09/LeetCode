@@ -5,22 +5,26 @@ public:
         
         if(n == 1) return 0;
         
-        int prefix[n];
-        prefix[0] = height[0];
-        for(int i = 1;i<n;i++){
-            prefix[i] = max(prefix[i-1] , height[i]);
-        }
-        
-        int suffix[n];
-        suffix[n-1] = height[n-1];
-        for(int i = n-2;i>=0;i--){
-            suffix[i] = max(suffix[i+1] , height[i]);
-        }
+        int low = 0 , high = n-1;
+        int max_left = 0 , max_right = 0;
         
         int water = 0;
-        
-        for(int i = 1;i+1<n;i++){
-           water += min(prefix[i] , suffix[i]) - height[i];
+        while(low <= high){
+            if(height[low] <= height[high]){
+                if(height[low] > max_left)
+                    max_left = height[low];
+                else
+                    water += max_left - height[low];
+                
+                low++;
+            }else{
+                if(height[high] > max_right)
+                    max_right = height[high];
+                else 
+                    water += max_right - height[high];
+                
+                high--;
+            }
         }
         
         return water;
