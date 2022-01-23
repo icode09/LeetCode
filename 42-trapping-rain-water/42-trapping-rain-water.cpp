@@ -20,10 +20,7 @@ public:
         int water = 0;
         
         for(int i = 1;i+1<n;i++){
-            int var = min(prefix[i-1] , suffix[i+1]);
-            if(var > height[i]){
-                water += var - height[i];
-            }
+           water += min(prefix[i] , suffix[i]) - height[i];
         }
         
         return water;
