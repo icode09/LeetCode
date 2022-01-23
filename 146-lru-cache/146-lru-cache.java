@@ -17,8 +17,8 @@ class LRUCache{
     public LRUCache(int capacity) {
         hashMap = new HashMap<>();
         this.capacity = capacity;
-        head = new DoublyLinkedListNode(0,0);
-        tail = new DoublyLinkedListNode(0,0);
+        head = new DoublyLinkedListNode(-1,-1);
+        tail = new DoublyLinkedListNode(-1,-1);
 
         head.next = tail;
         tail.prev = head;
