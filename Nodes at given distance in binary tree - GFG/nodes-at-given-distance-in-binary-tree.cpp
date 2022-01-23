@@ -146,7 +146,7 @@ public:
                     }
                 }
                 
-                neigh.clear();
+                // neigh.clear();
             }
         }
         sort(ans.begin(),ans.end());
