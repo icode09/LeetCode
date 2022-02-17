@@ -34,7 +34,7 @@ string encode(string src)
           i++;
       }
       res.push_back(src[i]);
-      res.append(to_string(count));
+      res.push_back((char)(count + '0'));
   }
   
   return res;
