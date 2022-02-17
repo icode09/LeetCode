@@ -4,6 +4,7 @@ public:
         unordered_set<string> wordDict(wordList.begin() , wordList.end());
         queue<string> to_visit;
         to_visit.push(beginWord);
+        wordDict.erase(beginWord);
         int ladder = 1;
         
         while(!to_visit.empty()){
@@ -14,7 +15,7 @@ public:
                 
                 if(word == endWord) return ladder;
                 
-                wordDict.erase(word); // marking it as already visited
+                // marking it as already visited
                 
                 for(int i = 0;i<(int)word.size();i++){
                     char letter = word[i];
@@ -22,6 +23,7 @@ public:
                         word[i] = (char)(j + 'a');
                         if(wordDict.find(word) != wordDict.end()){
                             to_visit.push(word);
+                             wordDict.erase(word);
                         }
                     }
                     word[i] = letter;
