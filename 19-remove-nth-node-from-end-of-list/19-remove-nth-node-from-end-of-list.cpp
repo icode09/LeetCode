@@ -35,6 +35,7 @@ public:
         
         prev->next = curr->next;
         curr->next = NULL;
+        delete curr;
         
         return head;
     }
