@@ -1,27 +1,24 @@
 class Solution {
 public:
-    int dp[100001][2][2];
-    int profit(vector<int>& prices,int i,int hold,int k){
-        if(i == prices.size() || k == 2) return 0;
+    int maxProfit(vector<int>& prices) {
+        int n = prices.size();
         
-        if(dp[i][hold][k] != -1) return dp[i][hold][k];
-        
-        int ans = 0;
-        if(hold){
-            int sell = profit(prices,i+1,!hold,k+1) + prices[i];
-            int no_sell = profit(prices,i+1,hold,k);
-            ans = max(sell , no_sell);
-        }else{
-            int buy = profit(prices,i+1,!hold,k) - prices[i];
-            int no_buy = profit(prices,i+1,hold,k);
-            
-            ans = max(buy , no_buy);
+        int leftMin = prices[0] , rightMax = prices[n-1];
+        int left[n] , right[n];
+        left[0] = 0;  right[n-1] = 0;
+        for(int i = 1 , j = n-2 ; i < n && j >= 0 ; i++ , j--){
+            leftMin = min(leftMin , prices[i]);
+            left[i] = max(left[i-1] , prices[i] - leftMin);
+            rightMax = max(rightMax , prices[j]);
+            right[j] = max(right[j+1] , rightMax - prices[j]);
         }
         
-        return dp[i][hold][k] = ans;
-    }
-    int maxProfit(vector<int>& prices) {
-        memset(dp, -1 , sizeof dp);
-        return profit(prices,0,0,0);
+        int maxxProfit = 0;
+        
+        for(int i = 0;i<n;i++){
+            maxxProfit = max(maxxProfit, left[i] + right[i]);
+        }
+        
+        return maxxProfit;
     }
 };
