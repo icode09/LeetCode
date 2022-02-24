@@ -11,29 +11,12 @@
  */
 class Solution {
 public:
+    int pre = -1, res = INT_MAX;
     int minDiffInBST(TreeNode* root) {
-        if(!root) return 0;
-        TreeNode* prev = NULL;
-        TreeNode* curr = root;
-        
-        stack<TreeNode*> st;
-        int minDiff = INT_MAX;
-        while(!st.empty() || curr){
-            while(curr){
-                st.push(curr);
-                curr = curr->left;
-            }
-            TreeNode* top = st.top();
-            st.pop();
-            
-            if(prev){
-                minDiff = min(minDiff , top->val - prev->val);
-            }
-            
-            prev = top;
-            curr = top->right;
-        }
-        
-        return minDiff;
+        if (root->left != NULL) minDiffInBST(root->left);
+        if (pre >= 0) res = min(res, root->val - pre);
+        pre = root->val;
+        if (root->right != NULL) minDiffInBST(root->right);
+        return res;
     }
 };
