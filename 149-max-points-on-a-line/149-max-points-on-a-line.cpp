@@ -16,7 +16,7 @@ public:
                 else {
                 
                     for (int k=0; k<n; ++k) {
-                        if (static_cast<long>(p[k][1]-p[i][1]) * static_cast<long>(p[j][0]-p[i][0]) == static_cast<long>(p[j][1]-p[i][1]) * static_cast<long>(p[k][0]-p[i][0])) ++cnt;
+                        if (static_cast<long>(p[k][1]-p[i][1]) * (p[j][0]-p[i][0]) == static_cast<long>(p[j][1]-p[i][1]) * (p[k][0]-p[i][0])) ++cnt;
                     }
                 }
                 
