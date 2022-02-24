@@ -10,7 +10,7 @@ public:
         
         int ans = 0;
         for(int i = 0;i<n;i++){
-            int count = 0, localMax = 0;
+            int count = 1, localMax = 1;
             unordered_map<string,int> mapka;
             
             for(int j = i + 1;j<n;j++){
@@ -23,7 +23,7 @@ public:
                     localMax = max(localMax , val);
                 }
             }
-            ans = max(ans , count + localMax + 1);
+            ans = max(ans , count + localMax);
         }
         
         return ans;
