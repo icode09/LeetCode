@@ -1,28 +1,31 @@
 class Solution {
 public:
-    int maxPoints(vector<vector<int>>& p) {
-        int n = p.size();
+    int gcd(int a,int b){
+        return (b == 0) ? a : gcd(b,a%b);
+    }
+    int maxPoints(vector<vector<int>>& points) {
+        int n = points.size();
+        
         if(n <= 2) return n;
+        
         int ans = 0;
         for(int i = 0;i<n;i++){
-            for(int j = i+1;j<n;j++){
-                int cnt = 0;
-                
-                if (p[i][0]==p[j][0] and p[i][1]==p[j][1]) {
-                    for (int k=0; k<n; ++k)
-                        if (p[k][0]==p[i][0] and p[k][1]==p[i][1]) ++cnt;
+            int count = 0, localMax = 0;
+            unordered_map<string,int> mapka;
+            
+            for(int j = i + 1;j<n;j++){
+                if(points[j][0] == points[i][0] && points[j][1] == points[i][1]) count++;
+                else{
+                    int dy = points[j][1] - points[i][1] , dx = points[j][0] - points[i][0];
+                    int g = gcd(dx,dy);
+                    
+                    int val = ++mapka[to_string(dy/g) + "/" + to_string(dx/g)];
+                    localMax = max(localMax , val);
                 }
-                
-                else {
-                
-                    for (int k=0; k<n; ++k) {
-                        if (static_cast<long>(p[k][1]-p[i][1]) * (p[j][0]-p[i][0]) == static_cast<long>(p[j][1]-p[i][1]) * (p[k][0]-p[i][0])) ++cnt;
-                    }
-                }
-                
-                ans = max(ans , cnt);
             }
+            ans = max(ans , count + localMax + 1);
         }
+        
         return ans;
     }
 };
