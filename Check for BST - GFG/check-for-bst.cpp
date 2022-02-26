@@ -23,16 +23,25 @@ class Solution
 {
     public:
     //Function to check whether a Binary Tree is BST or not.
-    bool recur(Node* root, long minn, long maxx){
-        if(!root) return true;
-        if(root->data >= maxx || root->data <= minn) return false;
-        
-        return recur(root->left,minn,root->data) && recur(root->right,root->data,maxx);
-    }
     bool isBST(Node* root) 
     {
         // Your code here
-        return recur(root,LONG_MIN , LONG_MAX);
+        stack<Node*> st;
+        Node* curr = root , *prev = NULL;
+        while(!st.empty() || curr){
+            while(curr){
+                st.push(curr);
+                curr = curr->left;
+            }
+            curr = st.top();
+            st.pop();
+            
+            if(prev && curr->data <= prev->data) return false;
+            
+            prev = curr;
+            curr = curr->right;
+        }
+        return true;
     }
 };
 
