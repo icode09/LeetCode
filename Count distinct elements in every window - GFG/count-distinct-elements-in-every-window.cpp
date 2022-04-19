@@ -13,21 +13,28 @@ class Solution{
         //code here.
         vector<int> ans;
         unordered_map<int,int> mapka;
+        int count = 0;
         
         for(int i= 0;i<k;i++){
             mapka[arr[i]]++;
+            if(mapka[arr[i]] == 1){
+                count++;
+            }
         }
         
-        ans.push_back(mapka.size());
+        ans.push_back(count);
         
         for(int i = k;i<n;i++){
             mapka[arr[i - k]]--;
-            mapka[arr[i]]++;
-            
-            if(mapka[arr[i-k]] == 0){
-                mapka.erase(arr[i-k]);
+            if(mapka[arr[i - k]] == 0){
+                count--;
             }
-            ans.push_back(mapka.size());
+            
+            mapka[arr[i]]++;
+            if(mapka[arr[i]] == 1){
+                count++;
+            }
+            ans.push_back(count);
         }
         
         return ans;
