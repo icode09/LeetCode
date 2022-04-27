@@ -15,17 +15,20 @@ class Solution{
         
         // Complete the function
     
-        int count=0;
-       int left=0,right=n-1;
-       while(left<right){
-           if(arr[left]+arr[right]==sum){
-               count++;
-               left++,right--;
-           }
-           else if(arr[left]+arr[right]<sum) left++;
-           else right--;
-       }
-       return count==0?-1:count;
+        int i = 0 , j = n -1;
+        int count = 0;
+        while(i < j){
+            if(arr[i] + arr[j] == sum){
+                count++;
+                i++ , j--;
+            }else if(arr[i] + arr[j] < sum){
+                i++;
+            }else{
+                j--;
+            }
+        }
+        
+        return count == 0 ? -1 : count;
     }
 };
 
