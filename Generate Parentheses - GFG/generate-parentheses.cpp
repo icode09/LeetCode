@@ -14,21 +14,17 @@ vector<string> AllParenthesis(int n) ;
 class Solution
 {
     public:
-    void solve(string& res , int open , int close , vector<string>& ans){
+    void solve(string res, int open , int close , vector<string>& ans){
         if(!open && !close){
             ans.push_back(res);
             return;
         }
         
         if(open){
-            res += "(";
-            solve(res , open - 1, close,ans);
-            res.pop_back();
+            solve(res + "(", open - 1, close,ans);
         }
         if(close && close > open){
-            res += ")";
-            solve(res , open , close - 1, ans);
-            res.pop_back();
+            solve(res + ")", open , close - 1, ans);
         }
     }
     vector<string> AllParenthesis(int n) 
@@ -36,8 +32,7 @@ class Solution
         // Your code goes here
         if(!n) return {};
         vector<string> ans;
-        string res = "";
-        solve(res , n , n , ans);
+        solve("" , n , n , ans);
         
         return ans;
     }
