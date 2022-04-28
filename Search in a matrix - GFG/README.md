@@ -1,5 +1,5 @@
 # Search in a matrix
-## Easy 
+##  Easy 
 <div class="problem-statement">
                 <p></p><p><span style="font-size:18px">Given a matrix <strong>mat</strong>[][] of size <strong>N</strong>&nbsp;x&nbsp;<strong>M</strong>, where every row and column is sorted in increasing order, and a number <strong>X</strong> is given. The task is to find whether element <strong>X</strong> is present in the matrix or not.</span></p>
 
