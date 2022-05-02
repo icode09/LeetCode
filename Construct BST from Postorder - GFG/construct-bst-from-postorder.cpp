@@ -57,7 +57,7 @@ int main ()
 Node* constructBST(int post[],int& idx,int left, int right){
     if(idx < 0) return NULL;
     
-    if(post[idx] > right || post[idx] < left)
+    if(post[idx] >= right || post[idx] <= left)
         return NULL;
         
     Node* newNode = new Node(post[idx]);
